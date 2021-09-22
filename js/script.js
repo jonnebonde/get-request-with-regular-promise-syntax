@@ -1,4 +1,4 @@
-const url = "https://cat-fact.herokuapp.com/facts";
+const url = "https://noroff.herokuapp.com/v1/cat-facts/facts";
 
 const resultsContainer = document.querySelector(".results");
 
