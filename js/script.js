@@ -1,16 +1,38 @@
-const url = "https://noroff.herokuapp.com/v1/cat-facts/facts";
+//const url = "https://noroff.herokuapp.com/v1/cat-facts/facts";
+const url = "https://api.rawg.io/api/games?dates=2019-01-01,2019-12-31&ordering=-rating&key=f6dd075d81db416fbb289fc9d3726038";
 
 const resultsContainer = document.querySelector(".results");
 
 
-// fetch(url)
-//     .then(response => response.json())
-//     .then(data => createHTML(data))
-//     .catch(error => resultsContainer.innerHTML = displayError("An error occurred when calling the API"));
+// arrow functions
+
+
+fetch(url)
+    .then(response => response.json())     
+    .then(data => createHTML(data))    
+    .catch(error => resultsContainer.innerHTML = displayError("An error occurred when calling the API"));
+           
+        
+//  normal functions
+
+fetch(url)
+    .then(function(response) {
+        console.log(response);
+        return response.json();
+    })
+    .then(function(data) {
+        console.log(data);
+        createHTML(data);
+    })
+    .catch(function(error) {
+        console.log(error);
+        resultsContainer.innerHTML = displayError("An error occurred when calling the API");
+    })
+
 
 
 function createHTML(results) {
-    const facts = results.all;
+    const facts = results.results;
 
     resultsContainer.innerHTML = "";
 
@@ -20,24 +42,27 @@ function createHTML(results) {
                 break;
             }
 
-            resultsContainer.innerHTML += `<div class="result">${facts[i].text}</div>`;
+            resultsContainer.innerHTML += `<div class="result">${facts[i].name}</div>`;
         }
 }
 
 
-async function getCats() {
+// Prefer the async function method, easy to read.
+
+ async function getCats() {
     try {
         const response = await fetch(url);
 
         const data = await response.json();
 
-        const facts = data.all;
+        const facts = data.results;
 
-        createHTML(facts);
+        
 
     } catch (error) {
         resultsContainer.innerHTML = displayError("An error occurred when calling the API");
     }
 }
 
-getCats();
+//getCats();
+
